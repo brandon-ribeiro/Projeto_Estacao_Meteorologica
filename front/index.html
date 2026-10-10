@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img class="logo" src="assets/clima.png" alt="logo_meteorologia">
+            <div>
+                <h1>Estação Meteorológica</h1>
+                <p>Monitoramento em tempo real</p>
+            </div>
+        </div>
+        <div class="header-status">
+            <div class="status-bolinha"></div>
+            <div>
+                <p class="title">Estação</p>
+                <p class="status" id="statusHeader">--</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <p class="erro-dados" id="erroDados"></p>
+        <section class="secao-cards">
+            <div class="card-status">
+                <div class="card-status-topo">
+                    <div class="status-bolinha"></div>
+                    <p class="status" id="status">--</p>
+                </div>
+                <div>
+                    <p class="title">Data e horário</p>
+                    <p class="card-status-valor" id="dataHora">--/--/---- --:--:--</p>
+                </div>
+                <div>
+                    <p class="title">GPS (lat, long)</p>
+                    <p class="card-status-valor" id="gps">--</p>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <img class="card-icone" src="assets/termometro.png" alt="Temperatura">
+                    <p class="card-valor" id="dht_temp">--</p>
+                    <p class="card-titulo">Temperatura</p>
+                </div>
+                <div class="card">
+                    <img class="card-icone" src="assets/umidade.png" alt="Umidade">
+                    <p class="card-valor" id="dht_hum">--</p>
+                    <p class="card-titulo">Umidade</p>
+                </div>
+                <div class="card">
+                    <img class="card-icone" src="assets/pressao.png" alt="Pressão atmosférica">
+                    <p class="card-valor" id="bmp_press">--</p>
+                    <p class="card-titulo">Pressão atmosférica</p>
+                </div>
+                <div class="card">
+                    <div class="card-icone card-icone-vazio"></div>
+                    <p class="card-valor" id="qualidadeAr">--</p>
+                    <p class="card-titulo">Qualidade do ar</p>
+                </div>
+            </div>
+        </section>
+        <section class="secao-tabela">
+            <div class="painel-header">
+                <div>
+                    <p class="titulo-pequeno">REGISTROS</p>
+                    <h2>Histórico de leituras</h2>
+                </div>
+                <span class="periodo">A cada 4 horas</span>
+            </div>
+            <div class="tabela-container">
+                <table class="tabela-historico">
+                    <thead>
+                        <tr>
+                            <th>GPS (lat, long)</th>
+                            <th>Horário</th>
+                            <th>Temperatura</th>
+                            <th>Umidade</th>
+                            <th>Pressão atmosférica</th>
+                            <th>Qualidade do ar</th>
+                            <th>Dia e noite</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p class="footer-titulo">Estação Meteorológica &bull; 2026</p>
+        <p class="footer-nomes">Brandon &bull; Matheus &bull; Pedro &bull; Ricardo</p>
+    </footer>
+    <script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="js/lib/jquery.flot.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
