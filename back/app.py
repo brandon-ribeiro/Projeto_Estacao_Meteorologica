@@ -98,7 +98,7 @@ def apagar_leituras():
 # ================= TRATAMENTO DAS MENSAGENS =================
 def montar_registro_sensores(topico, payload, dados):
     local = dados.get('localizacao') or {}
-    
+    print(dados)
     return {
         'mensagem': dados.get('Telemetria'),
         'data_hora': datetime.now().isoformat(timespec='seconds'),
@@ -116,7 +116,6 @@ def montar_registro_sensores(topico, payload, dados):
         'payload': payload
     }
 
-
 def montar_registro_texto(topico, payload):
     return {
         'data_hora': datetime.now().isoformat(timespec='seconds'),
@@ -130,7 +129,6 @@ def montar_registro_texto(topico, payload):
 def processar_mensagem(topico, payload):
     try:
         dados = json.loads(payload)
-
         if isinstance(dados, dict):
             registro = montar_registro_sensores(topico, payload, dados)
         else:
@@ -155,7 +153,9 @@ def handle_connect(client, userdata, flags, rc):
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
     payload = message.payload.decode()
-    
+    print(payload) 
+    dados = json.loads(payload)
+    print(dados)
     try:
         processar_mensagem(message.topic, payload)
     except Exception as e:
