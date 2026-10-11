@@ -71,7 +71,7 @@ def buscar_ultima_leitura():
     return dict(linha) if linha else None
 
 
-def listar_leituras(limite=20, tipo=None):
+def listar_leituras(limite=10, tipo=None):
     sql = 'SELECT * FROM leituras'
     params = []
     
@@ -98,7 +98,6 @@ def apagar_leituras():
 # ================= TRATAMENTO DAS MENSAGENS =================
 def montar_registro_sensores(topico, payload, dados):
     local = dados.get('localizacao') or {}
-    print(dados)
     return {
         'mensagem': dados.get('Telemetria'),
         'data_hora': datetime.now().isoformat(timespec='seconds'),
@@ -153,9 +152,6 @@ def handle_connect(client, userdata, flags, rc):
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
     payload = message.payload.decode()
-    print(payload) 
-    dados = json.loads(payload)
-    print(dados)
     try:
         processar_mensagem(message.topic, payload)
     except Exception as e:
@@ -184,7 +180,7 @@ def rota_dados():
 
 @app.route('/historico', methods=['GET'])
 def rota_historico():
-    limite = request.args.get('limite', default=20, type=int)
+    limite = request.args.get('limite', default=10, type=int)
     tipo = request.args.get('tipo')  # 'sensores', 'texto' ou vazio
     
     return jsonify(listar_leituras(limite, tipo))

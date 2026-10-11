@@ -85,7 +85,6 @@ $(function () {
         let corpo = $(".tabela-historico tbody").empty();
         $.each(historico, function (i, leitura) {
             let ldrValue = leitura.ldr <= 1500 ? "Dia ☀️" : "Noite 🌙";
-
             $("<tr>")
                 .append($("<td>").text(leitura.ip_lat + ", " + leitura.ip_lon))
                 .append($("<td>").text(formatDate(leitura.data_hora)))

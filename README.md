@@ -1,4 +1,4 @@
-## Start Projetct
+## Inicialização do Projeto
 
 ### Back
 ```shell
@@ -8,13 +8,13 @@ pip install -r requirements.txt
 python app.py
 ``` 
 
-### Front 
+### Front  
 
 ```shell
 cd front 
 python -m http.server
-``` 
-
+```
+  
 # Preparação do Ambiente para Instalação e Operação do ESP32 com Python
 
 Para rodar Python no ESP32, utiliza-se o **MicroPython**, uma implementação leve da linguagem otimizada para microcontroladores.
@@ -100,3 +100,9 @@ esptool.py --chip esp32 --port /dev/cu.usbserial-0001 --baud 460800 write_flash 
 4. Selecione **MicroPython (ESP32)** no primeiro menu.
 5. No menu de porta, selecione a porta serial identificada anteriormente e clique em **OK**.
 6. O console inferior (Shell) exibirá o prompt do MicroPython (`>>>`).
+
+## 7. Wokwi - Representação
+![Texto Alternativo](./front/assets/wokwi.png)
+
+## 8. Dashboard
+![Texto Alternativo](./front/assets/dashboard.png)
