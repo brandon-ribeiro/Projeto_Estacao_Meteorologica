@@ -84,6 +84,8 @@ $(function () {
     function preencherHistorico(historico) {
         let corpo = $(".tabela-historico tbody").empty();
         $.each(historico, function (i, leitura) {
+            let ldrValue = leitura.ldr > 1500 ? "Dia": "Noite";
+            console.log(ldrValue)
             $("<tr>")
                 .append($("<td>").text(leitura.ip_lat + ", " + leitura.ip_lon))
                 .append($("<td>").text(formatDate(leitura.data_hora)))
@@ -91,7 +93,7 @@ $(function () {
                 .append($("<td>").text(leitura.dht_hum))
                 .append($("<td>").text(leitura.bmp_press))
                 .append($("<td>").text(leitura.qualidadeAr))
-                .append($("<td>").text(leitura.ldr))
+                .append($("<td>").text(ldrValue))
                 .appendTo(corpo);
         });
     }
