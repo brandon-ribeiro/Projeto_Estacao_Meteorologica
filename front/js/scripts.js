@@ -71,9 +71,9 @@ $(function () {
     setInterval(atualizarDataHora, 1000);
 
     function preencherCards(cards) {
-        $.each(cards, function (i, card) {
-            $("#" + i).text(card);
-        });
+        $("#bmp_press").text(cards.bmp_press.toFixed(2));
+        $("#dht_temp").text(cards.dht_temp.toFixed(0) + "°");
+        $("#dht_hum").text(cards.dht_hum.toFixed(0) + "%");
     }
 
     var temporizador;
@@ -84,14 +84,13 @@ $(function () {
     function preencherHistorico(historico) {
         let corpo = $(".tabela-historico tbody").empty();
         $.each(historico, function (i, leitura) {
-            let ldrValue = leitura.ldr > 1500 ? "Dia": "Noite";
-            console.log(ldrValue)
+            let ldrValue = leitura.ldr <= 1500 ? "Dia ☀️" : "Noite 🌙";
             $("<tr>")
                 .append($("<td>").text(leitura.ip_lat + ", " + leitura.ip_lon))
                 .append($("<td>").text(formatDate(leitura.data_hora)))
-                .append($("<td>").text(leitura.dht_temp))
-                .append($("<td>").text(leitura.dht_hum))
-                .append($("<td>").text(leitura.bmp_press))
+                .append($("<td>").text(leitura.dht_temp.toFixed(0) + "°"))
+                .append($("<td>").text(leitura.dht_hum.toFixed(0) + "%"))
+                .append($("<td>").text(leitura.bmp_press.toFixed(2)))
                 .append($("<td>").text(leitura.qualidadeAr))
                 .append($("<td>").text(ldrValue))
                 .appendTo(corpo);
