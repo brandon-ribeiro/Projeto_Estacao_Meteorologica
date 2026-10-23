@@ -27,7 +27,7 @@ def get_conexao():
     
     return conn
 
-
+    
 def criar_tabela():
     with get_conexao() as conn:
         conn.execute('''
@@ -42,11 +42,12 @@ def criar_tabela():
                 ldr         INTEGER,
                 bmp_press   REAL,
                 bmp_temp    REAL,
+                mq_air      INTEGER,
                 cidade      TEXT,
                 estado      TEXT,
                 ip_lat      REAL,
                 ip_lon      REAL,
-                payload     TEXT
+                payload     TEXT 
             )
         ''')
 
@@ -107,6 +108,7 @@ def montar_registro_sensores(topico, payload, dados):
         'dht_temp': dados.get('DHT_temp'),
         'dht_hum': dados.get('DHT_hum'),
         'ldr': dados.get('LDR'),
+        'mq135': dados.get('MQ135'),
         'bmp_press': dados.get('BMP_press'),
         'bmp_temp': dados.get('BMP_temp'),
         'cidade': local.get('cidade'),
