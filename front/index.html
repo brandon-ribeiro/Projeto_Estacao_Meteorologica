@@ -9,84 +9,60 @@
 </head>
 <body>
     <header>
-        <div class="header-logo">
+        <a class="header-logo" href="#home">
             <img class="logo" src="assets/clima.png" alt="logo_meteorologia">
             <div>
                 <h1>Estação Meteorológica</h1>
                 <p>Monitoramento em tempo real</p>
             </div>
-        </div>
+        </a>
         <div class="header-status">
-            <div class="status-bolinha"></div>
+            <div class="status-bolinha" id="statusBolinha"></div>
             <div>
-                <p class="title">Estação</p>
+                <p class="title" id="local">Estação</p>
                 <p class="status" id="statusHeader">--</p>
             </div>
         </div>
     </header>
     <main>
+        <div class="topo">
+            <h2 class="titulo-pagina" id="tituloPagina">Home</h2>
+            <div class="filtro">
+                <button class="filtro-botao" id="filtroBotao" type="button" aria-label="Filtrar componentes" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                        <path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/>
+                    </svg>
+                </button>
+                <ul class="filtro-menu" id="filtroMenu">
+                    <li><a href="#home">Todos</a></li>
+                    <li><a href="#dht22">DHT22</a></li>
+                    <li><a href="#mq135">MQ135</a></li>
+                    <li><a href="#bmp280">BMP280</a></li>
+                    <li><a href="#ldr">LDR</a></li>
+                </ul>
+            </div>
+        </div>
+
         <p class="erro-dados" id="erroDados"></p>
-        <section class="secao-cards">
-            <div class="card-status">
-                <div class="card-status-topo">
-                    <div class="status-bolinha"></div>
-                    <p class="status" id="status">--</p>
+
+        <section class="pagina" id="paginaHome"></section>
+
+        <section class="pagina" id="paginaDetalhe" hidden>
+            <h3 class="secao-titulo">Especificações</h3>
+            <div class="spec-card">
+                <div class="spec-componente">
+                    <img class="spec-img" id="specImg" src="" alt="">
+                    <p class="spec-nome" id="specNome">--</p>
+                    <p class="spec-tensao" id="specTensao">--</p>
+                    <p class="spec-descricao" id="specDescricao"></p>
                 </div>
-                <div>
-                    <p class="title">Data e horário</p>
-                    <p class="card-status-valor" id="dataHora">--/--/---- --:--:--</p>
-                </div>
-                <div>
-                    <p class="title">GPS (lat, long)</p>
-                    <p class="card-status-valor" id="gps">--</p>
-                </div>
+                <dl class="spec-medidas" id="specMedidas"></dl>
             </div>
-            <div class="cards">
-                <div class="card">
-                    <img class="card-icone" src="assets/termometro.png" alt="Temperatura">
-                    <p class="card-valor" id="dht_temp">--</p>
-                    <p class="card-titulo">Temperatura</p>
-                </div>
-                <div class="card">
-                    <img class="card-icone" src="assets/umidade.png" alt="Umidade">
-                    <p class="card-valor" id="dht_hum">--</p>
-                    <p class="card-titulo">Umidade</p>
-                </div>
-                <div class="card">
-                    <img class="card-icone" src="assets/pressao.png" alt="Pressão atmosférica">
-                    <p class="card-valor" id="bmp_press">--</p>
-                    <p class="card-titulo">Pressão atmosférica</p>
-                </div>
-                <div class="card">
-                    <div class="card-icone card-icone-vazio"></div>
-                    <p class="card-valor" id="qualidadeAr">--</p>
-                    <p class="card-titulo">Qualidade do ar</p>
-                </div>
-            </div>
-        </section>
-        <section class="secao-tabela">
-            <div class="painel-header">
-                <div>
-                    <p class="titulo-pequeno">REGISTROS</p>
-                    <h2>Histórico de leituras</h2>
-                </div>
-                <span class="periodo">A cada 4 horas</span>
-            </div>
-            <div class="tabela-container">
-                <table class="tabela-historico">
-                    <thead>
-                        <tr>
-                            <th>GPS (lat, long)</th>
-                            <th>Horário</th>
-                            <th>Temperatura</th>
-                            <th>Umidade</th>
-                            <th>Pressão atmosférica</th>
-                            <th>Qualidade do ar</th>
-                            <th>Dia e noite</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+
+            <h3 class="secao-titulo">Gráfico - Histórico de medições</h3>
+            <div class="grafico-card">
+                <div class="grafico-legenda" id="graficoLegenda"></div>
+                <div class="grafico" id="grafico"></div>
             </div>
         </section>
     </main>
