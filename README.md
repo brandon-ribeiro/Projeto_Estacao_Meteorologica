@@ -11,7 +11,6 @@ A proposta surgiu a partir da necessidade de ampliar o monitoramento ambiental e
 
 ### 📈 Dashboard
 ![Dashboard](./front/assets/dashboard/dashboard.jpg)
-![Dashboard](./front/assets/dashboard/dashboard1.jpg)
 ![Dashboard](./front/assets/dashboard/dashboard2.jpg)
 ![Dashboard](./front/assets/dashboard/dashboard3.jpg)
 ![Dashboard](./front/assets/dashboard/dashboard4.jpg)
@@ -116,4 +115,4 @@ esptool.py --chip esp32 --port /dev/cu.usbserial-0001 --baud 460800 write_flash 
 6. O console inferior (Shell) exibirá o prompt do MicroPython (`>>>`).
 
 ## Passo a Passo
-
+    
