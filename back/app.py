@@ -67,6 +67,22 @@ def rota_historico():
     return jsonify(db.find_history(limite, tipo))
 
 
+
+@app.route('/historico/periodo', methods=['GET'])
+def rota_historico_periodo():
+    horas = request.args.get('horas', default=3, type=float)
+    pontos = request.args.get('pontos', default=60, type=int)
+    
+    return jsonify(db.find_periodo(horas, pontos))
+
+
+@app.route('/resumo/diario', methods=['GET'])
+def rota_resumo_diario():
+    dias = request.args.get('dias', default=7, type=int)
+    
+    return jsonify(db.find_resumo_diario(dias))
+
+
 # INÍCIO
 if __name__ == '__main__':
     db.create_tables()

@@ -1,7 +1,7 @@
 :root {
     color-scheme: light;
 
-    --primery-color: #FFF;
+    --primery-color: #FCFCFC;
     --secondary-color: #111827;
 
     --bg-light: #FCFCFC;
@@ -28,8 +28,9 @@
     --erro-bg-color: #FEF3C7;
 }
 
+/* Tema escuro: segue o sistema, a menos que o usuário escolha pelo botão */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         color-scheme: dark;
 
         --primery-color: #171D26;
@@ -58,6 +59,36 @@
         --erro-tx-color: #FDE68A;
         --erro-bg-color: #3B2F14;
     }
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --primery-color: #171D26;
+    --secondary-color: #F9FAFB;
+
+    --bg-light: #0F141B;
+    --header-color: #202834;
+    --fill-suave: #202834;
+    --fill-valor: #2A3340;
+
+    --tx-primery-color: #E5E7EB;
+    --tx-secondary-color: #F9FAFB;
+    --tx-muted-color: #9CA3AF;
+
+    --status-color: #4ADE80;
+    --offline-color: #F87171;
+    --alerta-color: #FBBF24;
+    --grafico-color: #60A5FA;
+    --grafico-color-2: #FB923C;
+    --grafico-grade: #2A3340;
+
+    --border-color: #2A3340;
+    --card-border: #4B5563;
+    --linha-color: #2A3340;
+
+    --erro-tx-color: #FDE68A;
+    --erro-bg-color: #3B2F14;
 }
 
 body {
@@ -154,9 +185,25 @@ main {
     margin-bottom: 16px;
 }
 
+.topo-acoes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .titulo-pagina {
     font-size: 32px;
     color: var(--tx-secondary-color);
+}
+
+/* ---------- Botão de tema ---------- */
+.tema-botao .icone-sol,
+:root[data-theme="dark"] .tema-botao .icone-lua {
+    display: none;
+}
+
+:root[data-theme="dark"] .tema-botao .icone-sol {
+    display: block;
 }
 
 /* ---------- Filtro ---------- */
@@ -164,7 +211,8 @@ main {
     position: relative;
 }
 
-.filtro-botao {
+.filtro-botao,
+.tema-botao {
     display: flex;
     padding: 4px;
     border: none;
@@ -175,6 +223,7 @@ main {
 }
 
 .filtro-botao:hover,
+.tema-botao:hover,
 .filtro-botao[aria-expanded="true"] {
     background-color: var(--fill-suave);
 }
@@ -231,10 +280,57 @@ main {
 }
 
 /* ---------- Home ---------- */
-#paginaHome {
+#paginaHome .secao-titulo {
+    margin-top: 48px;
+}
+
+#paginaHome .secao-titulo:first-child {
+    margin-top: 8px;
+}
+
+.home-grade {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px 32px;
+    gap: 32px;
+    margin-top: 12px;
+}
+
+.home-grade-larga {
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+}
+
+/* Leituras atuais: os cinco cards lado a lado (Temperatura tem dois sensores) */
+.grade-leituras {
+    grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.grade-leituras .grupo-titulo {
+    font-size: 20px;
+}
+
+.grade-leituras .grupo-card {
+    gap: 8px;
+    min-height: 0;
+    padding: 16px 8px;
+}
+
+.grade-leituras .componente {
+    padding: 8px 8px 0;
+}
+
+.grade-leituras .componente-dado {
+    font-size: clamp(22px, 2vw, 28px);
+    white-space: nowrap;
+}
+
+.grade-leituras .tendencia {
+    white-space: normal;
+}
+
+.grade-leituras .sparkline {
+    width: calc(100% + 16px);
+    margin: auto -8px 0;
 }
 
 .grupo {
@@ -253,11 +349,11 @@ main {
 .grupo-card {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     flex: 1;
     gap: 16px;
     min-height: 248px;
-    padding: 24px;
+    padding: 20px;
     border-radius: 12px;
     border: 1px solid var(--card-border);
 }
@@ -266,8 +362,12 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    min-width: 0;
+    max-width: 280px;
     gap: 4px;
-    padding: 12px 16px;
+    padding: 12px 12px 0;
+    overflow: hidden;
     border-radius: 12px;
     text-align: center;
     transition: background-color .15s;
@@ -279,18 +379,141 @@ main {
 
 .componente-img {
     width: auto;
-    height: 96px;
-    margin-bottom: 8px;
+    height: 72px;
+    margin-bottom: 6px;
 }
 
 .componente-nome {
-    font-size: 15px;
+    font-size: 14px;
+    color: var(--tx-muted-color);
 }
 
 .componente-dado {
-    font-size: 15px;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--tx-secondary-color);
+}
+
+.tendencia {
+    font-size: 12px;
+    color: var(--tx-muted-color);
+    white-space: nowrap;
+}
+
+.tendencia b {
+    font-weight: 600;
+    color: var(--tx-primery-color);
+}
+
+.sparkline {
+    display: block;
+    width: calc(100% + 24px);
+    height: 44px;
+    margin: auto -12px 0;
+}
+
+/* ---------- Gauge ---------- */
+.gauge-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.gauge {
+    width: 100%;
+    max-width: 240px;
+}
+
+.gauge svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.gauge-limite {
+    font-size: 11px;
+    fill: var(--tx-muted-color);
+}
+
+.gauge-ponteiro {
+    stroke: var(--tx-secondary-color);
+    fill: var(--tx-secondary-color);
+}
+
+.gauge-valor {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--tx-secondary-color);
+}
+
+.gauge-faixa {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--tx-secondary-color);
+    border: 1.5px solid var(--cor);
+}
+
+.gauge-faixa::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--cor);
+}
+
+.gauge-escala {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 12px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--tx-muted-color);
+}
+
+.gauge-escala span::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background-color: var(--cor);
+}
+
+/* ---------- Seletor (botões) ---------- */
+.segmento {
+    display: inline-flex;
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--fill-suave);
+}
+
+.segmento button {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    font: inherit;
+    font-size: 13px;
+    color: var(--tx-muted-color);
+    cursor: pointer;
+}
+
+.segmento button.ativo {
+    background-color: var(--primery-color);
+    color: var(--tx-secondary-color);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
 }
 
 .componente-extra {
@@ -313,11 +536,13 @@ main {
 
 .spec-card {
     display: flex;
-    justify-content: space-between;
-    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 32px 72px;
     min-height: 296px;
     margin-bottom: 56px;
-    padding: 24px 52px 24px 20px;
+    padding: 24px;
 }
 
 .spec-componente {
@@ -355,7 +580,6 @@ main {
     align-content: start;
     align-items: center;
     gap: 32px 16px;
-    margin-top: 16px;
 }
 
 .spec-medidas dt {
@@ -373,16 +597,67 @@ main {
     color: var(--tx-secondary-color);
 }
 
+.spec-gauge {
+    width: 220px;
+    text-align: center;
+}
+
+.spec-gauge:empty {
+    display: none;
+}
+
+.secao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.secao-topo .secao-titulo {
+    margin-bottom: 0;
+}
+
+.graficos-detalhe {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+    gap: 24px;
+}
+
 .grafico-card {
     padding: 16px 16px 8px;
+}
+
+.grafico-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 30px;
+    margin-bottom: 8px;
 }
 
 .grafico-legenda {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    margin-bottom: 8px;
     font-size: 13px;
+}
+
+.grafico-resumo {
+    font-size: 12px;
+    color: var(--tx-muted-color);
+}
+
+.grafico-vazio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 13px;
+    color: var(--tx-muted-color);
 }
 
 .grafico-legenda span::before {
@@ -397,9 +672,21 @@ main {
 
 .grafico {
     width: 100%;
-    height: 280px;
+    height: 260px;
     font-size: 11px;
     color: var(--tx-muted-color);
+}
+
+.tooltip-grafico {
+    position: absolute;
+    z-index: 20;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+    pointer-events: none;
+    color: var(--primery-color);
+    background-color: var(--secondary-color);
 }
 
 /* ---------- Footer ---------- */
@@ -426,6 +713,20 @@ footer {
 }
 
 /* ---------- Responsivo ---------- */
+@media (max-width: 1200px) {
+    .grade-leituras {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grade-leituras .grupo:first-child {
+        grid-column: span 2;
+    }
+
+    .grade-leituras .componente-dado {
+        font-size: 26px;
+    }
+}
+
 @media (max-width: 768px) {
     header {
         padding: 0 16px;
@@ -447,12 +748,19 @@ footer {
         font-size: 26px;
     }
 
-    #paginaHome {
-        gap: 36px;
+    .home-grade,
+    .home-grade-larga {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
 
-    #paginaHome {
-        grid-template-columns: 1fr;
+    #paginaHome .secao-titulo {
+        margin-top: 32px;
+    }
+
+    .grade-leituras {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
     }
 
     .grupo-card {
@@ -474,12 +782,25 @@ footer {
         margin-top: 0;
     }
 
+    .spec-gauge {
+        width: 100%;
+        max-width: 260px;
+    }
+
     .grafico {
         height: 220px;
     }
 }
 
 @media (max-width: 420px) {
+    .grade-leituras {
+        grid-template-columns: 1fr;
+    }
+
+    .grade-leituras .grupo:first-child {
+        grid-column: auto;
+    }
+
     .filtro-menu {
         padding: 4px;
     }
@@ -503,6 +824,10 @@ footer {
     }
 
     .componente-img {
-        height: 80px;
+        height: 56px;
+    }
+
+    .componente-dado {
+        font-size: 24px;
     }
 }

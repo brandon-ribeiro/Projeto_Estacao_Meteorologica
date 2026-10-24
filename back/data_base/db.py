@@ -1,7 +1,7 @@
 import os
 import sqlite3
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # CONFIGURAÇÃO
@@ -68,6 +68,15 @@ GPS = """
     )
 """
 
+SQL_JOINS = """
+      FROM leituras l
+      LEFT JOIN dht_leituras dht ON l.id = dht.leitura_id
+      LEFT JOIN bmp_leituras bmp ON l.id = bmp.leitura_id
+      LEFT JOIN ldr_leituras ldr ON l.id = ldr.leitura_id
+      LEFT JOIN mq_leituras mq ON l.id = mq.leitura_id
+      LEFT JOIN gps_leituras gps ON l.id = gps.leitura_id
+"""
+
 SQL_SELECT = """
     SELECT l.*
     ,      dht.temperatura as dht_temp
@@ -80,12 +89,36 @@ SQL_SELECT = """
     ,      gps.longitude
     ,      gps.city
     ,      gps.state
-      FROM leituras l
-      LEFT JOIN dht_leituras dht ON l.id = dht.leitura_id
-      LEFT JOIN bmp_leituras bmp ON l.id = bmp.leitura_id
-      LEFT JOIN ldr_leituras ldr ON l.id = ldr.leitura_id
-      LEFT JOIN mq_leituras mq ON l.id = mq.leitura_id
-      LEFT JOIN gps_leituras gps ON l.id = gps.leitura_id
+""" + SQL_JOINS
+
+# Médias por intervalo de tempo (bucket) a partir de uma data inicial
+SQL_PERIODO = """
+    SELECT strftime('%Y-%m-%dT%H:%M:%S', AVG(julianday(l.data_hora))) as data_hora
+    ,      AVG(dht.temperatura) as dht_temp
+    ,      AVG(dht.humidade)    as humidade
+    ,      AVG(bmp.temperatura) as bmp_temp
+    ,      AVG(bmp.pressao)     as pressao
+    ,      AVG(ldr.value)       as ldr_value
+    ,      AVG(mq.value)        as mq_value
+""" + SQL_JOINS + """
+     WHERE l.tipo = 'sensores'
+       AND l.data_hora >= :inicio
+     GROUP BY MIN(CAST((julianday(l.data_hora) - julianday(:inicio)) * 86400 / :intervalo AS INTEGER), :ultimo)
+     ORDER BY 1
+"""
+
+# Mínimas, máximas e médias por dia
+SQL_DIARIO = """
+    SELECT substr(l.data_hora, 1, 10) as dia
+    ,      MIN(dht.temperatura)       as temp_min
+    ,      MAX(dht.temperatura)       as temp_max
+    ,      AVG(dht.humidade)          as humidade_media
+    ,      AVG(bmp.pressao)           as pressao_media
+""" + SQL_JOINS + """
+     WHERE l.tipo = 'sensores'
+     GROUP BY dia
+     ORDER BY dia DESC
+     LIMIT ?
 """
 
 
@@ -289,4 +322,33 @@ def find_by_id(id):
         result = conn.execute(sql, params).fetchall()
 
     return [dict(l) for l in result]
+
+
+def find_periodo(horas=3, pontos=60):
+    """Leituras das últimas `horas` (contadas a partir da leitura mais recente),
+    agrupadas em até `pontos` médias."""
+    with get_connect() as conn:
+        ultima = conn.execute(
+            "SELECT MAX(data_hora) FROM leituras WHERE tipo = 'sensores'"
+        ).fetchone()[0]
+
+        if not ultima:
+            return []
+
+        inicio = datetime.fromisoformat(ultima) - timedelta(hours=horas)
+        params = {
+            'inicio': inicio.isoformat(timespec='seconds'),
+            'intervalo': max(1, horas * 3600 / pontos),
+            'ultimo': pontos - 1,
+        }
+        result = conn.execute(SQL_PERIODO, params).fetchall()
+
+    return [dict(l) for l in result]
+
+
+def find_resumo_diario(dias=7):
+    with get_connect() as conn:
+        result = conn.execute(SQL_DIARIO, (dias,)).fetchall()
+
+    return [dict(l) for l in reversed(result)]
 
