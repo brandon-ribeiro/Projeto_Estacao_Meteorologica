@@ -10,13 +10,13 @@ O presente trabalho teve como objetivo o desenvolvimento de uma estação meteor
 A proposta surgiu a partir da necessidade de ampliar o monitoramento ambiental em cidades inteligentes, possibilitando que informações relacionadas às condições climáticas sejam coletadas, processadas e disponibilizadas à população em tempo real.
 
 ### 📈 Dashboard
-![Dashboard](./front/assets/dashboard/dashboard.png)
-![Dashboard](./front/assets/dashboard/dashboard1.png)
-![Dashboard](./front/assets/dashboard/dashboard2.png)
-![Dashboard](./front/assets/dashboard/dashboard3.png)
-![Dashboard](./front/assets/dashboard/dashboard4.png)
-![Dashboard](./front/assets/dashboard/dashboard5.png)
-![Dashboard](./front/assets/dashboard/dashboard6.png)
+![Dashboard](./front/assets/dashboard/dashboard.jpg)
+![Dashboard](./front/assets/dashboard/dashboard1.jpg)
+![Dashboard](./front/assets/dashboard/dashboard2.jpg)
+![Dashboard](./front/assets/dashboard/dashboard3.jpg)
+![Dashboard](./front/assets/dashboard/dashboard4.jpg)
+![Dashboard](./front/assets/dashboard/dashboard5.jpg)
+![Dashboard](./front/assets/dashboard/dashboard6.jpg)
 
 
 ### 🟢 Representação - Wokwi
