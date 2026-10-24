@@ -99,17 +99,21 @@ def apagar_leituras():
 # ================= TRATAMENTO DAS MENSAGENS =================
 def montar_registro_sensores(topico, payload, dados):
     local = dados.get('localizacao') or {}
+    dht22 = dados.get('dht22')
+    bmp280 = dados.get('bmp280')
+    mq135 = dados.get('mq135')
+    ldr = dados.get('ldr')
     return {
         'mensagem': dados.get('Telemetria'),
         'data_hora': datetime.now().isoformat(timespec='seconds'),
         'topico': topico,
         'tipo': 'sensores',
-        'dht_temp': dados.get('DHT_temp'),
-        'dht_hum': dados.get('DHT_hum'),
-        'ldr': dados.get('LDR'),
-        'mq135': dados.get('MQ135'),
-        'bmp_press': dados.get('BMP_press'),
-        'bmp_temp': dados.get('BMP_temp'),
+        'dht_temp': dht22.get('temp'),
+        'dht_hum': dht22.get('hum'),
+        'ldr': ldr.get('lightness'),
+        'mq_air': mq135.get('air_quality'),
+        'bmp_press': bmp280.get('pressure'),
+        'bmp_temp': bmp280.get('temp'),
         'cidade': local.get('cidade'),
         'estado': local.get('estado'),
         'ip_lat': local.get('lat'),
