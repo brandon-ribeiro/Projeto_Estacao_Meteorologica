@@ -4,6 +4,13 @@ Estação meteorológica embarcada que monitora condições ambientais, disponib
 
 ---
 
+## 📁 Material de apoio
+Acesse a pasta armazenada na nuvem para conferir os artefatos complementares do projeto (slides da apresentação, vídeo demonstrativo e documentação detalhada):
+
+🔗 **[Acessar Pasta no GoogleDrive](https://drive.google.com/drive/folders/1AktsB6afoI96qBCe7MYz6yh9aG7wrRSK?usp=sharing)**
+
+---
+
 ## 📌 Sobre o Projeto
 
 O presente trabalho teve como objetivo o desenvolvimento de uma estação meteorológica embarcada destinada ao monitoramento de condições ambientais e à disponibilização de dados climáticos de forma pública e acessível.
