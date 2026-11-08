@@ -9,8 +9,8 @@ from componentes import dados_compo
 
 
 # ---------- Config ----------
-SSID = '*PIMENTEL*' #iPhone de Pedro *PIMENTEL*
-PASSWORD = 'pedro1706@' #pedro1706@
+SSID = '' # Nome da rede
+PASSWORD = '' #Senha da rede
 
 MQTT_CLIENT_ID = "esp32_wokwi_demo_12345" #mexer
 MQTT_BROKER    = "broker.emqx.io" #não mexer
